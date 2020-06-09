@@ -8,7 +8,6 @@ import (
 
 type Validator interface {
     ValidateMap(Data) (qualified bool, err error)
-    Rule() Rule
 }
 
 func New(rule Rule, lgs ...Lang) (Validator, error) {
@@ -29,10 +28,6 @@ type fireValidator struct {
     rule   Rule
     token  map[DataKey][]Token
     lang   Lang
-}
-
-func (f *fireValidator)Rule() Rule {
-    return f.rule
 }
 
 func (f *fireValidator)parseRule() error {

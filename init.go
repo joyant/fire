@@ -33,4 +33,5 @@ func init()  {
     RegisterToken(&ipv4Token{})
     RegisterToken(&ipv6Token{})
     RegisterToken(&ipToken{})
+    RegisterToken(&aliasToken{})
 }

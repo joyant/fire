@@ -1490,6 +1490,28 @@ func TestIp2(t *testing.T) {
     }
 }
 
+func TestAlias(t *testing.T) {
+    rule := Rule{
+        "name":"required|alias:class_name",
+    }
+    v, err := New(rule, LangEN)
+    if err != nil {
+        t.Errorf("expected nil got %v", err)
+    }
+    qualified, err := v.ValidateMap(map[string]interface{}{})
+    if err == nil {
+        t.Errorf("expected err got nil")
+    } else {
+        expected := "class_name is required"
+        if expected != err.Error() {
+            t.Errorf("expected %s got %s", expected, err.Error())
+        }
+    }
+    if qualified {
+        t.Errorf("expected false got true")
+    }
+}
+
 func TestAll(t *testing.T)  {
     RegisterI18nDataKeyMap(map[DataKey]map[Lang]string{
         "name":             {LangZH: "名字"},

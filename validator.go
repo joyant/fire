@@ -42,11 +42,16 @@ func (f *fireValidator)parseRule() error {
 }
 
 func (f *fireValidator)ValidateMap(data Data) (qualified bool, err error) {
-    if len(data) == 0 && len(f.rule) > 0 {
-        return false, errors.New("data is nil")
-    }
     for k := range f.rule {
         tokens := f.token[DataKey(k)]
+        var key = k
+        //如果tokens中有多个别名(alias)，只取第一个
+        for _, token := range tokens {
+            if a, ok := token.(alias); ok && a.Alias() != "" {
+                key = a.Alias()
+                break
+            }
+        }
         for _, token := range tokens {
             qualified, literalValue, err := token.Evaluate(DataValue(data[k]), data)
             if err != nil {
@@ -57,9 +62,9 @@ func (f *fireValidator)ValidateMap(data Data) (qualified bool, err error) {
                 if msg == "" {
                     return false, fmt.Errorf("dataKey %s's i18nMsgFormat is not exists", k)
                 }
-                i18nV := getI18nDataValue(DataKey(k), f.lang)
+                i18nV := getI18nDataValue(DataKey(key), f.lang)
                 if i18nV == "" {
-                    i18nV = k
+                    i18nV = key
                 }
                 hint := replaceMsg(i18nV, msg, literalValue, f.lang)
                 return false, errors.New(hint)

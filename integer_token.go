@@ -7,6 +7,10 @@ import (
 type integerToken struct {}
 
 func (t *integerToken) Evaluate(value DataValue, data Data) (qualified bool, literalValue []string, err error) {
+    if value == nil {
+        qualified = true
+        return
+    }
     v, ok := value.(string)
     if !ok {
         err = fmt.Errorf("%s's value must be string", t.TokenType())

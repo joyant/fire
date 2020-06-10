@@ -4,10 +4,12 @@ import (
     "bytes"
     "errors"
     "fmt"
+    "reflect"
+    "strings"
 )
 
 type Validator interface {
-    ValidateMap(Data) (qualified bool, err error)
+    Validate(data interface{}) (qualified bool, err error)
     Rule() Rule
 }
 
@@ -46,7 +48,25 @@ func (f *fireValidator)parseRule() error {
     return nil
 }
 
-func (f *fireValidator)ValidateMap(data Data) (qualified bool, err error) {
+func (f *fireValidator)Validate(data interface{}) (qualified bool, err error) {
+    switch reflect.TypeOf(data).Kind() {
+    case reflect.Map:
+        switch data.(type) {
+        case Data:
+            return f.validateMap(data.(Data))
+        case map[string]interface{}:
+            return f.validateMap(data.(map[string]interface{}))
+        default:
+            return false, errors.New("data need fire.Data type")
+        }
+    case reflect.Struct, reflect.Ptr:
+        return f.validateStruct(data)
+    default:
+        return false, errors.New("data need fire.Data or structure type")
+    }
+}
+
+func (f *fireValidator)validateMap(data Data) (qualified bool, err error) {
     for k := range f.rule {
         tokens := f.token[DataKey(k)]
         var key = k
@@ -60,6 +80,7 @@ func (f *fireValidator)ValidateMap(data Data) (qualified bool, err error) {
         for _, token := range tokens {
             qualified, literalValue, err := token.Evaluate(DataValue(data[k]), data)
             if err != nil {
+                fmt.Println("k:", k)
                 return false, err
             }
             if !qualified {
@@ -79,6 +100,52 @@ func (f *fireValidator)ValidateMap(data Data) (qualified bool, err error) {
     return true, nil
 }
 
+func (f *fireValidator)tryName(name string) string {
+    for _, v := range []string{name, camel2Underline(name), strings.ToLower(name)} {
+        if _, ok := f.rule[v]; ok {
+            return v
+        }
+    }
+    return ""
+}
+
+func (f *fireValidator)makeData(s interface{}) Data {
+    t := reflect.TypeOf(s)
+    v := reflect.ValueOf(s)
+    k := t.Kind()
+    var l int
+    if k == reflect.Ptr {
+        l = t.Elem().NumField()
+    } else {
+        l = t.NumField()
+    }
+    data := Data{}
+    for i := 0; i < l; i++ {
+        var field reflect.StructField
+        var iv interface{}
+        if k == reflect.Ptr {
+            field = t.Elem().Field(i)
+            iv = getValue(v.Elem().Field(i).Interface())
+        } else {
+            field = t.Field(i)
+            iv = getValue(v.Field(i).Interface())
+        }
+        if tag, ok := field.Tag.Lookup(Tag); ok {
+            data[tag] = iv
+            continue
+        }
+        name := f.tryName(field.Name)
+        if name != "" {
+            data[name] = iv
+        }
+    }
+    return data
+}
+
+func (f *fireValidator)validateStruct(s interface{}) (qualified bool, err error) {
+    return f.validateMap(f.makeData(s))
+}
+
 func getI18nDataValue(key DataKey, lang Lang) string {
     ls := i18nDataKeyMap[key]
     if len(ls) == 0 {
@@ -89,6 +156,30 @@ func getI18nDataValue(key DataKey, lang Lang) string {
     } else {
         return v
     }
+}
+
+func getValue(v interface{}) interface{} {
+    switch v.(type) {
+    case string, []string:
+        return v
+    default:
+        return fmt.Sprintf("%v", v)
+    }
+}
+
+func camel2Underline(s string) string {
+    buff := bytes.Buffer{}
+    for k, v := range s {
+        if v >= 'A' && v <= 'Z' {
+            if k > 0 && s[k-1] != '_' {
+                buff.WriteByte('_')
+            }
+            buff.WriteByte(byte('a'+v-'A'))
+            continue
+        }
+        buff.WriteByte(byte(v))
+    }
+    return buff.String()
 }
 
 //replaceMsg将含有占位符的字符串替换为有明确意义的字符串

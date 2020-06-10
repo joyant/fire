@@ -63,7 +63,7 @@ func TestNewLength(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"tom",
     })
     if qualified {
@@ -77,7 +77,7 @@ func TestNewLength(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err = v.ValidateMap(map[string]interface{}{
+    qualified, err = v.Validate(map[string]interface{}{
         "name":"jim",
     })
     if !qualified {
@@ -99,7 +99,7 @@ func TestNewRequired(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":[]string{},
     })
     if err == nil {
@@ -113,7 +113,7 @@ func TestNewRequired(t *testing.T) {
     if qualified {
         t.Errorf("expected false got true")
     }
-    qualified, err = v.ValidateMap(map[string]interface{}{
+    qualified, err = v.Validate(map[string]interface{}{
         "name":"",
     })
     if err == nil {
@@ -140,7 +140,7 @@ func TestNewRequired2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"abc",
     })
     if err != nil {
@@ -162,7 +162,7 @@ func TestInteger(t *testing.T)  {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"11",
     })
     if err != nil {
@@ -184,7 +184,7 @@ func TestInteger2(t *testing.T)  {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"abc",
     })
     if err == nil {
@@ -211,7 +211,7 @@ func TestBetween(t *testing.T)  {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"abc",
     })
     if err == nil {
@@ -238,7 +238,7 @@ func TestBetween2(t *testing.T)  {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"123",
     })
     if err != nil {
@@ -260,7 +260,7 @@ func TestLengthMin(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "address":"street A number B",
     })
     if err != nil {
@@ -282,7 +282,7 @@ func TestLengthMin2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "address":"A",
     })
     if err == nil {
@@ -309,7 +309,7 @@ func TestLengthBetween(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"tom",
     })
     if err == nil {
@@ -336,7 +336,7 @@ func TestLengthBetween2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"tommy",
     })
     if err != nil {
@@ -358,7 +358,7 @@ func TestMin(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"6",
     })
     if err != nil {
@@ -380,7 +380,7 @@ func TestMin2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"4",
     })
     if err == nil {
@@ -407,7 +407,7 @@ func TestMax(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"1",
     })
     if err != nil {
@@ -429,7 +429,7 @@ func TestMax2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "age":"6",
     })
     if err == nil {
@@ -456,7 +456,7 @@ func TestBool(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "installed":"6",
     })
     if err == nil {
@@ -483,7 +483,7 @@ func TestBool2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "installed":"true",
     })
     if err != nil {
@@ -505,7 +505,7 @@ func TestIn(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"6",
     })
     if err == nil {
@@ -532,7 +532,7 @@ func TestIn2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"jerry",
     })
     if err != nil {
@@ -554,7 +554,7 @@ func TestNotIn(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"tom",
     })
     if err == nil {
@@ -581,7 +581,7 @@ func TestNotIn2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"white",
     })
     if err != nil {
@@ -603,7 +603,7 @@ func TestEmail(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "mail":"tom",
     })
     if err == nil {
@@ -630,7 +630,7 @@ func TestEmail2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"white_head@163.com",
     })
     if err != nil {
@@ -652,7 +652,7 @@ func TestIpv4(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "site_ip":"192.168.0.",
     })
     if err == nil {
@@ -679,7 +679,7 @@ func TestIpv42(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "site_ip":"192.168.0.1",
     })
     if err != nil {
@@ -701,7 +701,7 @@ func TestURL(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "my_url":"https//www.baidu.com",
     })
     if err == nil {
@@ -728,7 +728,7 @@ func TestURL2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "my_url":"https://www.baidu.cn",
     })
     if err != nil {
@@ -750,7 +750,7 @@ func TestNumeric(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "money":"123.567890a",
     })
     if err == nil {
@@ -777,7 +777,7 @@ func TestNumeric2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "money":"123.4564390239",
     })
     if err != nil {
@@ -799,7 +799,7 @@ func TestNumeric3(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "money":"123345678",
     })
     if err != nil {
@@ -821,7 +821,7 @@ func TestNumeric4(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "money":"123.5678 90",
     })
     if err == nil {
@@ -848,7 +848,7 @@ func TestAlpha(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "first_name":"Smith2",
     })
     if err == nil {
@@ -875,7 +875,7 @@ func TestAlpha2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "first_name":"Smith",
     })
     if err != nil {
@@ -897,7 +897,7 @@ func TestAlphaNumeric(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "account":"afklsd32321*&",
     })
     if err == nil {
@@ -924,7 +924,7 @@ func TestAlphaNumeric2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "account":"abc123",
     })
     if err != nil {
@@ -946,7 +946,7 @@ func TestRegexp(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "password":"123456",
     })
     if err == nil {
@@ -973,7 +973,7 @@ func TestRegexp2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "password":"abc1234-56def",
     })
     if err != nil {
@@ -995,7 +995,7 @@ func TestDate(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "birthday":"2006",
     })
     if err == nil {
@@ -1022,7 +1022,7 @@ func TestDate2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "birthday":"2006-09-09 09:09:09",
     })
     if err != nil {
@@ -1044,7 +1044,7 @@ func TestDate3(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "birthday":"2006",
     })
     if err == nil {
@@ -1071,7 +1071,7 @@ func TestDate4(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "birthday":"2010",
     })
     if err != nil {
@@ -1093,7 +1093,7 @@ func TestContains(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"tommy",
     })
     if err == nil {
@@ -1120,7 +1120,7 @@ func TestContains2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"tommy",
     })
     if err != nil {
@@ -1142,7 +1142,7 @@ func TestContains3(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"TOMMY",
     })
     if err == nil {
@@ -1169,7 +1169,7 @@ func TestContains4(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "name":"TOMMY",
     })
     if err != nil {
@@ -1191,7 +1191,7 @@ func TestEquals(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "password":"test",
         "password2":"test1",
     })
@@ -1219,7 +1219,7 @@ func TestEquals2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "password":"test",
         "password2":"test",
     })
@@ -1245,7 +1245,7 @@ func TestEquals3(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "password":"test",
         "password2":"test1",
     })
@@ -1273,7 +1273,7 @@ func TestDifferent(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "new_password":"test",
         "old_password":"test",
     })
@@ -1301,7 +1301,7 @@ func TestDifferent2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "new_password":"test",
         "old_password":"test2",
     })
@@ -1324,7 +1324,7 @@ func TestDifferent3(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "new_password":[]string{"test"},
         "old_password":[]string{"test2"},
     })
@@ -1347,7 +1347,7 @@ func TestDifferent4(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "new_password":[]string{"test"},
         "old_password":[]string{"test"},
     })
@@ -1375,7 +1375,7 @@ func TestDifferent5(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "new_password":[]string{"test"},
         "old_password":"test",
     })
@@ -1403,7 +1403,7 @@ func TestIpv6(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "site_ip":"192.168.0.",
     })
     if err == nil {
@@ -1430,7 +1430,7 @@ func TestIpv62(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "site_ip":"0:0:123:0:8:800:123C:132A",
     })
     if err != nil {
@@ -1452,7 +1452,7 @@ func TestIp(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "site_ip":"192.168.0.",
     })
     if err == nil {
@@ -1479,7 +1479,7 @@ func TestIp2(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{
+    qualified, err := v.Validate(map[string]interface{}{
         "site_ip":"0:0:123:0:8:800:123C:132A",
     })
     if err != nil {
@@ -1498,7 +1498,7 @@ func TestAlias(t *testing.T) {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     }
-    qualified, err := v.ValidateMap(map[string]interface{}{})
+    qualified, err := v.Validate(map[string]interface{}{})
     if err == nil {
         t.Errorf("expected err got nil")
     } else {
@@ -1509,6 +1509,18 @@ func TestAlias(t *testing.T) {
     }
     if qualified {
         t.Errorf("expected false got true")
+    }
+}
+
+func TestCamel2Underline(t *testing.T)  {
+    if s := camel2Underline("name"); s != "name" {
+        t.Errorf("expected %s got %s", "name", s)
+    }
+    if s := camel2Underline("FirstName"); s != "first_name" {
+        t.Errorf("expected %s got %s", "first_name", s)
+    }
+    if s := camel2Underline("First_Name"); s != "first_name" {
+        t.Errorf("expected %s got %s", "first_name", s)
     }
 }
 
@@ -1563,7 +1575,7 @@ func TestAll(t *testing.T)  {
     if err != nil {
         t.Errorf("expected nil got %v", err)
     } else {
-        pass, err := v.ValidateMap(map[string]interface{}{
+        pass, err := v.Validate(map[string]interface{}{
             "name":             "tommy",
             "age":              "19",
             "mail":             "123456@qq.com",
@@ -1587,6 +1599,122 @@ func TestAll(t *testing.T)  {
             "favorite_site":    "192.168.0.2",
             "ignore_key":       "abc",
         })
+        if err != nil {
+            t.Errorf("expected nil got %v", err)
+        }
+        if !pass {
+            t.Errorf("expected true got false")
+        }
+    }
+}
+
+func TestAll2(t *testing.T)  {
+    RegisterI18nDataKeyMap(map[DataKey]map[Lang]string{
+        "name":             {LangZH: "名字"},
+        "age":              {LangZH: "年龄"},
+        "mail":             {LangZH: "邮箱"},
+        "gender":           {LangZH: "性别"},
+        "address":          {LangZH: "地址"},
+        "score":            {LangZH: "分数"},
+        "adult":            {LangZH: "是否成年人"},
+        "country":          {LangZH: "国家"},
+        "province":         {LangZH: "省份"},
+        "blog":             {LangZH: "博客"},
+        "deposit":          {LangZH: "存款"},
+        "firstName":        {LangZH: "首名称"},
+        "username":         {LangZH: "用户名"},
+        "birthday":         {LangZH: "生日"},
+        "favorite":         {LangZH: "爱好"},
+        "password":         {LangZH: "密码"},
+        "confirm_password": {LangZH: "第二次输入密码"},
+        "account":          {LangZH: "账号"},
+        "blog_ip4":         {LangZH: "博客IP4"},
+        "blog_ip6":         {LangZH: "博客IP6"},
+        "favorite_site":    {LangZH: "最爱网站"},
+    })
+    v, err := New(Rule{
+        "name":             "required|lengthBetween:5,10",
+        "age":              "integer|between:1,130",
+        "mail":             "require|email",
+        "gender":           "require|int|length:1",
+        "address":          "require|lengthMin:1|lengthMax:20",
+        "score":            "require|min:0|max:100",
+        "adult":            "require|bool",
+        "country":          "require|in:China,England",
+        "province":         "require|notIn:BeiJing,ShangHai",
+        "blog":             "url",
+        "deposit":          "require|numeric",
+        "FirstName":        "require|alpha",
+        "username":         "require|alphaNum",
+        "birthday":         "require|date:2006-01-02",
+        "favorite":         "require|contains:ball/i",
+        "password":         "require|regexp:^\\w{6,10}$",
+        "confirm_password": "require|equals:password",
+        "account":          "require|different:username",
+        "blog_ip4":         "ipv4",
+        "blog_ip6":         "require|ipv6",
+        "favorite_site":    "required",
+        "ignore_key":        "",
+    }, LangZH)
+    if err != nil {
+        t.Errorf("expected nil got %v", err)
+    } else {
+        type MyData struct {
+            Name string
+            Age int
+            Mail string
+            Gender int
+            Address string
+            Score float64
+            Adult bool
+            Country string
+            Province string
+            Blog string
+            Deposit float64
+            FirstName string
+            Username string
+            Birthday string
+            Favorite string
+            Password string
+            Confirm_Password string
+            Account string
+            BlogIPV4 string `fire:"blog_ip4"`
+            BlogIPV6 string `fire:"blog_ip6"`
+            FavoriteSite string
+            IgnoreKey string
+        }
+        myData := MyData{
+            Name:             "tommy",
+            Age:              19,
+            Mail:             "123456@qq.com",
+            Gender:           1,
+            Address:          "xinghua street no. 1",
+            Score:            95,
+            Adult:            false,
+            Country:          "China",
+            Province:         "xian",
+            Blog:             "https://www.my-blog.com",
+            Deposit:          100,
+            FirstName:        "Tom",
+            Username:         "tom123456",
+            Birthday:         "2010-01-02",
+            Favorite:         "FOOTBALL",
+            Password:         "123456abc",
+            Confirm_Password: "123456abc",
+            Account:          "tom123456@",
+            BlogIPV4:         "192.168.0.1",
+            BlogIPV6:         "0:0:123:0:8:800:123C:132A",
+            FavoriteSite:     "192.168.0.2",
+            IgnoreKey:        "abc",
+        }
+        pass, err := v.Validate(&myData)
+        if err != nil {
+            t.Errorf("expected nil got %v", err)
+        }
+        if !pass {
+            t.Errorf("expected true got false")
+        }
+        pass, err = v.Validate(myData)
         if err != nil {
             t.Errorf("expected nil got %v", err)
         }
@@ -1648,7 +1776,7 @@ func BenchmarkNew(b *testing.B) {
         b.Errorf("expected nil got %v", err)
     } else {
         for i := 0; i < b.N; i++ {
-            pass, err := v.ValidateMap(map[string]interface{}{
+            pass, err := v.Validate(map[string]interface{}{
                 "name":             "tommy",
                 "age":              "19",
                 "mail":             "123456@qq.com",

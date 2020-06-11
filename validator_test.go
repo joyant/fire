@@ -1490,6 +1490,36 @@ func TestIp2(t *testing.T) {
     }
 }
 
+func TestIp3(t *testing.T) {
+    rule := Rule{
+        "site_ip":"ip",
+    }
+    RegisterI18nDataKey("site_ip", map[Lang]string{
+        LangEN: "site_ip",
+    })
+    RegisterMsgFormat("site_ip", map[Lang]MsgFormat{
+        LangEN:"${0} is not ip",
+    })
+    v, err := New(rule, LangEN)
+    if err != nil {
+        t.Errorf("expected nil got %v", err)
+    }
+    qualified, err := v.Validate(map[string]interface{}{
+        "site_ip":"192.168.0.",
+    })
+    if err == nil {
+        t.Errorf("expected err got nil")
+    } else {
+        expected := "site_ip is not ip"
+        if expected != err.Error() {
+            t.Errorf("expeceted %s got %s", expected, err.Error())
+        }
+    }
+    if qualified {
+        t.Errorf("expected false got true")
+    }
+}
+
 func TestAlias(t *testing.T) {
     rule := Rule{
         "name":"required|alias:class_name",

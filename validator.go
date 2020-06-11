@@ -77,14 +77,17 @@ func (f *fireValidator)validateMap(data Data) (qualified bool, err error) {
                 break
             }
         }
+        var msg MsgFormat
         for _, token := range tokens {
             qualified, literalValue, err := token.Evaluate(DataValue(data[k]), data)
             if err != nil {
-                fmt.Println("k:", k)
                 return false, err
             }
             if !qualified {
-                msg := token.I18nMsgFormat(f.lang)
+                msg = getMsgFormat(DataKey(k), f.lang)
+                if msg == "" {
+                    msg = token.I18nMsgFormat(f.lang)
+                }
                 if msg == "" {
                     return false, fmt.Errorf("dataKey %s's i18nMsgFormat is not exists", k)
                 }

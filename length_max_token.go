@@ -34,7 +34,7 @@ func (t *lengthMaxToken) TokenType() TokenType {
 
 func (t *lengthMaxToken) I18nMsgFormat(lg Lang) MsgFormat {
     if lg == LangZH {
-        return "${0}必须大于等于${1}"
+        return "${0}长度必须小于等于${1}"
     } else if lg == LangEN {
         return "${0} must be greater than or equal to ${1}"
     }

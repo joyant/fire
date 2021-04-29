@@ -1601,6 +1601,7 @@ func TestAll(t *testing.T)  {
         "blog_ip6":         "require|ipv6",
         "favorite_site":    "required",
         "ignore_key":        "",
+        "slice_required":    "require",
     }, LangZH)
     if err != nil {
         t.Errorf("expected nil got %v", err)
@@ -1628,6 +1629,7 @@ func TestAll(t *testing.T)  {
             "blog_ip6":         "0:0:123:0:8:800:123C:132A",
             "favorite_site":    "192.168.0.2",
             "ignore_key":       "abc",
+            "slice_required":   []int{1},
         })
         if err != nil {
             t.Errorf("expected nil got %v", err)
@@ -1837,5 +1839,32 @@ func BenchmarkNew(b *testing.B) {
                 b.Errorf("expected true got false")
             }
         }
+    }
+}
+
+func TestAll3(t *testing.T)  {
+    v, err := New(Rule{
+        "name": "require|alias:nickname|lengthMin:2",
+        "topics":"require",
+    })
+    if err != nil {
+        panic(err)
+    }
+    type Dog struct {
+        Name string `json:"name"`
+        Topics []int `json:"topics"`
+    }
+    RegisterI18nDataKey("nickname", map[Lang]string{
+        LangZH: "昵称",
+    })
+    dog := &Dog{Name:"tom", Topics: []int{}}
+    q, _ := v.Validate(dog)
+    if q != false {
+        t.Errorf("Expected false got %t", true)
+    }
+    dog2 := &Dog{Name:"tom", Topics: []int{1}}
+    q2, _ := v.Validate(dog2)
+    if q2 != true {
+        t.Errorf("Expected true got %t", false)
     }
 }

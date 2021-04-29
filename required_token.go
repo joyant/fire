@@ -1,6 +1,7 @@
 package fire
 
 import (
+    "reflect"
     "strings"
 )
 
@@ -14,10 +15,10 @@ func (t *requiredToken) Evaluate(value DataValue, data Data) (qualified bool, li
     case string:
         v := value.(string)
         return strings.TrimSpace(v) != "", nil, nil
-    case []string:
-        v := value.([]string)
-        return len(v) > 0, nil, nil
     default:
+        if reflect.TypeOf(value).Kind() == reflect.Slice {
+            return reflect.ValueOf(value).Len() > 0, nil, nil
+        }
         return false, nil, nil
     }
 }
@@ -54,13 +55,13 @@ type requireToken struct {
 func (t *requireToken) Evaluate(value DataValue, data Data) (qualified bool, literalValue []string, err error) {
     switch value.(type) {
     case string:
-        v := value.(string)
-        return strings.TrimSpace(v) != "", nil, nil
-    case []string:
-        v := value.([]string)
-        return len(v) > 0, nil, nil
+       v := value.(string)
+       return strings.TrimSpace(v) != "", nil, nil
     default:
-        return false, nil, nil
+       if reflect.TypeOf(value).Kind() == reflect.Slice {
+           return reflect.ValueOf(value).Len() > 0, nil, nil
+       }
+       return false, nil, nil
     }
 }
 

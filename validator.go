@@ -166,6 +166,9 @@ func getValue(v interface{}) interface{} {
     case string, []string:
         return v
     default:
+        if reflect.TypeOf(v).Kind() == reflect.Slice && reflect.ValueOf(v).Len() == 0 {
+            return "" // 空数组以空字符串对待
+        }
         return fmt.Sprintf("%v", v)
     }
 }
